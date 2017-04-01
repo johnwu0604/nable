@@ -34,6 +34,15 @@ class Login extends React.Component {
                     title="Login"
                     color="#063e77"
                 />
+                <Button
+                    onPress={() => {
+                      this.props.navigator.push({
+                        name: 'Registration',
+                      });
+                    }}
+                    title="Create a new account"
+                    color="#063e77"
+                />
             </LoginBackground>
         );
     }

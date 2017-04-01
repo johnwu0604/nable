@@ -7,7 +7,8 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    Image
+    Image,
+    Button
 } from 'react-native';
 
 import Input from '../components/Input.js';
@@ -29,6 +30,13 @@ class Registration extends React.Component {
                 <Input text="Amount"></Input>
                 <Input text="Description"></Input>
                 <Input text="Date"></Input>
+                <Button
+                    onPress={() => {
+                        this.props.navigator.pop();
+                    }}
+                    title="Submit"
+                    color="#063e77"
+                />
             </LoginBackground>
         );
     }
@@ -36,6 +44,4 @@ class Registration extends React.Component {
 };
 
 
-export default AddPayment;/**
- * Created by TiffanyWang on 2017-04-01.
- */
+export default Registration;

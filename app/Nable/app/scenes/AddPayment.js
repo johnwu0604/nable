@@ -7,13 +7,13 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    Image
+    Image,
+    Button
 } from 'react-native';
 
 import Input from '../components/Input.js';
 import LoginBackground from '../components/LoginBackground.js';
 import Title from '../components/Title.js';
-import AddPaymentButton from '../components/AddPaymentButton.js';
 
 class AddPayment extends React.Component {
 
@@ -30,7 +30,13 @@ class AddPayment extends React.Component {
                 <Input text="Amount"></Input>
                 <Input text="Description"></Input>
                 <Input text="Date"></Input>
-                <AddPaymentButton/>
+                <Button
+                    onPress={() => {
+                        this.props.navigator.pop();
+                    }}
+                    title="Submit"
+                    color="#063e77"
+                />
             </LoginBackground>
         );
     }

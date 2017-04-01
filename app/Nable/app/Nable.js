@@ -14,6 +14,7 @@ import {
 import Payments from './scenes/Payments.js';
 import AddPayment from './scenes/AddPayment.js';
 import Login from './scenes/Login.js';
+import Registration from './scenes/Registration.js';
 
 export default class nable extends Component {
 
