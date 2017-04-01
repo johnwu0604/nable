@@ -115,7 +115,30 @@ module.exports = function (app) {
     // PAYMENT APIs
 
     app.post('/api/payment', function(req, res){
-        Payment.
+        var pmt = new Payment({
+            pid: req.body.pid,
+            name: req.body.name,
+            category: req.body.category,
+            price: req.body.price,
+            description: req.body.price,
+            phone: req.body.phone
+        });
+        pi
+        User.findOne({ email: req.body.email }, function(err, usr){
+            if(err)
+                return console.log(err);
+
+            var newArray = usr.paymentIds.slice();
+            newArray.push(pmt);
+            var query = {email: req.body.email};
+            User.update(query, {paymentIds: newArray}, undefined, function(err){
+                if(err)
+                    console.log(err);
+                res.send("payment added");
+            });
+        });
+
+
     });
 
     app.get('/', function (req, res) {
@@ -126,7 +149,9 @@ module.exports = function (app) {
 
 User.find(function (err, users) {
     if (err) return console.error(err);
-    console.log(users);
+    for(u in users){
+        console.log(users[u].paymentIds);
+    }
 });
 
 // User.remove({}, function(err) {
