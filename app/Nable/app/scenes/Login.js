@@ -27,7 +27,7 @@ class Login extends React.Component {
         return (
             <LoginBackground>
                 <Logo></Logo>
-                <Input text="Email"></Input>
+                <Input text="Email" type="mask"></Input>
                 <Input text="Password"></Input>
                 <Button
                     onPress={() => {

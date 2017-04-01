@@ -18,16 +18,15 @@ class Input extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: this.props.text,
+            text: ''
         };
     }
 
     render() {
         return (
             <View style={styles.box} >
-                <TextInput style={styles.input}
-                    editable = {true}
-                    maxLength = {40}
+                <TextInput
+                    style={{height: 40, borderColor: 'gray', borderWidth: 0}}
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text}
                 />
@@ -47,13 +46,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: windowWidth/12,
         marginRight: windowWidth/12,
-    },
-    input: {
-        color: 'rgba(6, 62, 119, 0.3)',
-        textAlign: 'center',
-        marginTop: windowHeight/25,
-        marginBottom: windowHeight/25,
-        fontSize: windowHeight/30
     }
 });
 
