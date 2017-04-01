@@ -23,8 +23,9 @@ class Registration extends React.Component {
     render() {
         return (
             <LoginBackground>
-                <Title text="Add a payment"></Title>
+                <Title text="Registration"></Title>
                 <Input text="Name"></Input>
+                <Input text="Email"></Input>
                 <Input text="Phone Number"></Input>
                 <Input text="Amount"></Input>
                 <Input text="Description"></Input>
@@ -36,6 +37,6 @@ class Registration extends React.Component {
 };
 
 
-export default AddPayment;/**
+export default Registration;/**
  * Created by TiffanyWang on 2017-04-01.
  */
