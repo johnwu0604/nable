@@ -34,7 +34,7 @@ class Payments extends React.Component {
     }
 
     componentWillMount() {
-        fetch("http://localhost:5000/api/user?email=nabil%40mail.mcgill.ca")
+        fetch("http://localhost:5000/api/payment?email=nabil%40mail.mcgill.ca")
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
