@@ -28,19 +28,31 @@ module.exports = function (app) {
         res.json("Hello Nable");
     });
 
-    app.post('/api/user', function(req, res) { // tested
+    app.post('/api/user', function(req, res) { // tested, checks for duplicate entry
         console.log("POST METHOD WORKS");
-        var usr = new User({
-            uid: req.body.uid,
-            name: req.body.name,
-            password: req.body.password,
-            email: req.body.email
-        });
-        usr.save(function(err, usr){
+
+        User.findOne({ email: req.body.email }, function(err, user){
             if(err)
                 return console.log(err);
-            res.json(usr);
+
+            if(user == undefined){
+                var usr = new User({
+                    uid: req.body.uid,
+                    name: req.body.name,
+                    password: req.body.password,
+                    email: req.body.email
+                });
+                usr.save(function(err, usr){
+                    if(err)
+                        return console.log(err);
+                    res.json(usr);
+                });
+            }else{
+                res.json("Duplicate entry");
+            }
+
         });
+
     });
 
     app.get('/api/user', function(req, res) { // tested
@@ -70,7 +82,7 @@ module.exports = function (app) {
         });
     });
 
-    app.delete('/api/user', function(req, res) { //
+    app.delete('/api/user', function(req, res) { // tested
         User.remove({ email: req.body.email }, function(err){
             if (!err)
                 console.log(err);
