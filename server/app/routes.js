@@ -4,7 +4,6 @@ module.exports = function (app) {
 
     // create schemas
     var userSchema = mongoose.Schema({
-        uid: Number,
         name: String,
         password: String,
         email: String,
@@ -12,12 +11,12 @@ module.exports = function (app) {
     });
 
     var paymentSchema = mongoose.Schema({
-        pid: Number,
         name: String,
         category: String,
         price: Number,
         description: String,
-        phone: String
+        phone: String,
+        date: String
     });
 
     // create models
@@ -38,7 +37,6 @@ module.exports = function (app) {
 
             if(user == undefined){
                 var usr = new User({
-                    uid: req.body.uid,
                     name: req.body.name,
                     password: req.body.password,
                     email: req.body.email
@@ -58,16 +56,16 @@ module.exports = function (app) {
 
     app.get('/api/user', function(req, res) { // tested
         console.log("GET METHOD WORKS");
-        User.findOne({ email: req.query.email }, function(err, user){
+        User.findOne({ _id: req.query._id }, function(err, user){
             if(err)
                 return console.log(err);
-            res.send(user);
+            res.json(user);
         });
     });
 
     app.put('/api/user', function(req, res) { // tested
         console.log("PUT METHOD WORKS");
-        User.findOne({ email: req.body.email }, function(err, user){
+        User.findOne({ _id: req.body._id }, function(err, user){
             if(err)
                 return console.log(err);
 
@@ -79,7 +77,7 @@ module.exports = function (app) {
                 user.save(function(err, user){
                     if(err)
                         return console.log(err);
-                    res.send(user);
+                    res.json(user);
                 });
             }else {
                 User.findOne({ email: user.email }, function(err, usr){
@@ -90,7 +88,7 @@ module.exports = function (app) {
                         user.save(function(err, user){
                             if(err)
                                 return console.log(err);
-                            res.send(user);
+                            res.json(user);
                         });
                     }else{
                         res.json("Duplicate entry");
@@ -103,7 +101,7 @@ module.exports = function (app) {
     });
 
     app.delete('/api/user', function(req, res) { // tested
-        User.remove({ email: req.body.email }, function(err){
+        User.remove({ _id: req.body._id }, function(err){
             if (!err)
                 console.log(err);
             res.send("success");
@@ -114,32 +112,88 @@ module.exports = function (app) {
 
     // PAYMENT APIs
 
-    app.post('/api/payment', function(req, res){
+    app.post('/api/payment', function(req, res){ // tested
         var pmt = new Payment({
-            pid: req.body.pid,
             name: req.body.name,
             category: req.body.category,
             price: req.body.price,
-            description: req.body.price,
-            phone: req.body.phone
+            description: req.body.description,
+            phone: req.body.phone,
+            date: req.body.date
         });
-        pi
-        User.findOne({ email: req.body.email }, function(err, usr){
+
+        User.findOne({ _id: req.body._id }, function(err, usr){
             if(err)
                 return console.log(err);
 
             var newArray = usr.paymentIds.slice();
             newArray.push(pmt);
-            var query = {email: req.body.email};
+            var query = {_id: req.body._id};
             User.update(query, {paymentIds: newArray}, undefined, function(err){
                 if(err)
                     console.log(err);
-                res.send("payment added");
+
+                pmt.save(function(err, pmt){
+                    if(err)
+                        return console.log(err);
+                    res.json(pmt);
+                });
             });
         });
 
+    });
+
+    app.get('/api/payment', function(req, res){ // tested
+        User.findOne({ _id: req.query._id }, function(err, user){
+            if(err)
+                return console.log(err);
+            if(user != undefined)
+                res.json(user.paymentIds);
+            else
+                res.json("User does not exist");
+        });
+    });
+
+    app.delete('/api/payment', function(req, res){
+        Payment.findOne({ _id: req.body.p_id }, function(err, pmt){
+            console.log(pmt);
+            if(err)
+                return console.log(err);
+
+            if(pmt != undefined){
+
+                User.findOne({ _id: req.body._id }, function(err, usr){
+                    if(err)
+                        return console.log(err);
+
+                    // var index = usr.paymentIds.indexOf(pmt);
+                    // if(index != -1)
+                    //     usr.paymentIds.splice(index, 1);
+
+                    for(i in usr.paymentIds){
+                        if(usr.paymentIds[i]._id == req.body.p_id && i > -1){
+                            usr.paymentIds.splice(i, 1);
+                            console.log("removed");
+                        }
+                    }
+
+                    var query = {_id: req.body._id};
+                    User.update(query, {paymentIds: usr.paymentIds}, undefined, function(err){
+                        if(err)
+                            console.log(err);
+
+                        Payment.remove({ _id: req.body.p_id }, function(err){
+                            if (!err)
+                                console.log(err);
+                            res.send("payment deleted");
+                        });
+                    });
+                });
+            }
+        });
 
     });
+
 
     app.get('/', function (req, res) {
         res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
@@ -147,17 +201,33 @@ module.exports = function (app) {
 
 
 
-User.find(function (err, users) {
-    if (err) return console.error(err);
-    for(u in users){
-        console.log(users[u].paymentIds);
-    }
-});
+    User.find(function (err, users) {
+        // if (err) return console.error(err);
+        // for(u in users){
+        //     console.log(users[u]._id);
+        //     coensole.log(users[u].paymentIds);
+        // }
+        console.log(users);
+    });
 
-// User.remove({}, function(err) {
-//     if (err) {
-//         console.log(err)
-//     }
-// });
+
+    Payment.find(function (err, payments) {
+        if (err) return console.error(err);
+        console.log(payments);
+    });
+
+
+    // User.remove({}, function(err) {
+    //     if (err) {
+    //         console.log(err)
+    //     }
+    // });
+    //
+    // Payment.remove({}, function(err) {
+    //     if (err) {
+    //         console.log(err)
+    //     }
+    // });
+
 
 };
