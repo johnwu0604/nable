@@ -66,6 +66,23 @@ module.exports = function (app) {
         });
     });
 
+    app.post('/api/authentication', function(req, res){ // not tested
+        console.log("Authenticating");
+        User.findOne({ email: req.body.email }, function(err, user){
+            if(err) {
+                return console.log(err);
+            } else if(user == undefined) {
+                res.json("No user exists with that email, please create an account.");
+            } else {
+                // validate password
+                if(user.password === req.body.password)
+                    res.json(user);
+                else
+                    res.json("Invalid password");
+            }
+        });
+    });
+
     app.put('/api/user', function(req, res) { // tested
         console.log("PUT METHOD WORKS");
         User.findOne({ _id: req.body._id }, function(err, user){
