@@ -8,31 +8,53 @@ import {
     TouchableOpacity,
     AlertIndicatorIOS,
     ActivityIndicatorIOS,
-    AlertIOS
+    AlertIOS,
+    StyleSheet
 } from 'react-native';
 
-import styles from '../style/row.js';
 
 class Payments extends React.Component {
 
-    constructor() {
-        super();
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    constructor(props) {
+        super(props);
         this.state = {
-            dataSource: ds.cloneWithRows(['row 1', 'row 2']),
-        };
+            name: '',
+            email: '',
+            userId: this.props.userId
+        }
     }
 
     render() {
         return (
-            <ListView
-                dataSource={this.state.dataSource}
-                renderRow={(rowData) => <Text style={styles.text}>{rowData}</Text>}
-            />
+            <View style={styles.container}>
+                <Text>{this.state.name}</Text>
+                <Text>{this.state.email}</Text>
+            </View>
         );
     }
 
+    componentWillMount() {
+        fetch("http://localhost:5000/api/payment?email=nabil%40mail.mcgill.ca")
+            .then((response) => response.json())
+            .then((responseData) => {
+                this.setState({
+                    name: responseData.name,
+                    email: responseData.email
+                });
+            })
+            .done();
+    }
+
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    }
+});
 
 
 export default Payments;
