@@ -21,12 +21,11 @@ class Payments extends React.Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2
             }),
-            userId: '58dfbca2b0843231831a2066'
+            userId: ''
         }
     }
 
     render() {
-        console.log( this.state.dataSource );
         return (
             <ListView
                 dataSource={this.state.dataSource}
@@ -48,7 +47,10 @@ class Payments extends React.Component {
     }
 
     componentWillMount() {
-        var userId = this.state.userId;
+        this.setState({
+            userId: this.props.userId
+        });
+        var userId = this.props.userId;
         fetch('http://localhost:5000/api/payment?_id=' + userId )
             .then((response) => response.json())
             .then((responseData) => {

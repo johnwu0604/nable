@@ -15,8 +15,12 @@ import Input from '../components/Input.js';
 
 class Login extends React.Component {
 
-    constructor() {
-        super();
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            userId: '58dfbca2b0843231831a2066'
+        };
     }
 
     render() {
@@ -29,6 +33,7 @@ class Login extends React.Component {
                     onPress={() => {
                       this.props.navigator.push({
                         name: 'Payments',
+                        userId: this.state.userId
                       });
                     }}
                     title="Login"

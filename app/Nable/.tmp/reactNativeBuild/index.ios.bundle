@@ -46464,7 +46464,7 @@ var Payments = function (_React$Component) {
                     return row1 !== row2;
                 }
             }),
-            userId: '58dfbca2b0843231831a2066'
+            userId: ''
         };
         return _this;
     }
@@ -46472,13 +46472,43 @@ var Payments = function (_React$Component) {
     babelHelpers.createClass(Payments, [{
         key: 'render',
         value: function render() {
-            console.log(this.state.dataSource);
+            console.log("hi");
+            return _react2.default.createElement(_reactNative.ListView, {
+                dataSource: this.state.dataSource,
+                renderRow: this.renderPayments.bind(this)
+            });
+        }
+    }, {
+        key: 'renderPayments',
+        value: function renderPayments(payment) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: styles.container },
-                _react2.default.createElement(_reactNative.ListView, {
-                    dataSource: this.state.dataSource
-                })
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    null,
+                    payment.name
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    null,
+                    payment.phone
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    null,
+                    payment.description
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    null,
+                    payment.price
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    null,
+                    payment.date
+                )
             );
         }
     }, {
@@ -46486,7 +46516,10 @@ var Payments = function (_React$Component) {
         value: function componentWillMount() {
             var _this2 = this;
 
-            var userId = this.state.userId;
+            this.setState({
+                userId: this.props.userId
+            });
+            var userId = this.props.userId;
             fetch('http://localhost:5000/api/payment?_id=' + userId).then(function (response) {
                 return response.json();
             }).then(function (responseData) {
@@ -46777,9 +46810,15 @@ var _Input2 = babelHelpers.interopRequireDefault(_Input);
 var Login = function (_React$Component) {
     babelHelpers.inherits(Login, _React$Component);
 
-    function Login() {
+    function Login(props) {
         babelHelpers.classCallCheck(this, Login);
-        return babelHelpers.possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this));
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).call(this, props));
+
+        _this.state = {
+            userId: '58dfbca2b0843231831a2066'
+        };
+        return _this;
     }
 
     babelHelpers.createClass(Login, [{
@@ -46796,7 +46835,8 @@ var Login = function (_React$Component) {
                 _react2.default.createElement(_reactNative.Button, {
                     onPress: function onPress() {
                         _this2.props.navigator.push({
-                            name: 'Payments'
+                            name: 'Payments',
+                            userId: _this2.state.userId
                         });
                     },
                     title: 'Login',
