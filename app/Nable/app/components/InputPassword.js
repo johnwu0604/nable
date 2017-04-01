@@ -1,4 +1,7 @@
 /**
+ * Created by TiffanyWang on 2017-04-01.
+ */
+/**
  * Created by JohnWu on 2017-04-01.
  */
 import React, { Component } from 'react';
@@ -13,7 +16,7 @@ import Dimensions from 'Dimensions';
 var windowHeight = Dimensions.get('window').height;
 var windowWidth = Dimensions.get('window').width;
 
-class Input extends Component {
+class InputPassword extends Component {
 
     constructor(props) {
         super(props);
@@ -27,6 +30,7 @@ class Input extends Component {
             <View style={styles.box} >
                 <TextInput
                     placeholder={this.state.label}
+                    secureTextEntry={true}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}
                     onChangeText={(text) => this.setState({text})}
                     value={this.state.text}
@@ -34,7 +38,6 @@ class Input extends Component {
             </View>
         );
     }
-
 }
 
 
@@ -51,6 +54,4 @@ const styles = StyleSheet.create({
     }
 });
 
-
-
-export default Input;
+export default InputPassword;
