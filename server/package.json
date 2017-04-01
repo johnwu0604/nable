@@ -5,6 +5,8 @@
   "main": "server.js",
   "author": "Macrohard",
   "dependencies": {
-    "express": "^4.13.4"
+    "body-parser": "^1.17.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.9.2"
   }
 }
