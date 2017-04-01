@@ -38,6 +38,11 @@ export default class nable extends Component {
                 return ( <AddPayment
                     {...route}
                     navigator={navigator} />);
+
+            case 'Registration':
+                return ( <Registration
+                    {...route}
+                    navigator={navigator} />);
             default:
                 return;
         }
