@@ -1,6 +1,9 @@
 /**
  * Created by JohnWu on 2017-04-01.
  */
+/**
+ * Created by JohnWu on 2017-04-01.
+ */
 import React, { Component } from 'react';
 import {
     StyleSheet,
@@ -9,16 +12,13 @@ import {
 
 import Dimensions from 'Dimensions';
 
-var windowHeight = Dimensions.get('window').height;
-var windowWidth = Dimensions.get('window').width;
-
-class LoginButton extends Component {
+class AddPaymentButton extends Component {
 
     render() {
         return (
             <Button
                 onPress={onButtonPress}
-                title="Login"
+                title="Submit"
                 color="#063e77"
             />
         )
@@ -29,4 +29,4 @@ const onButtonPress = () => {
     console.log( "button pressed" );
 };
 
-export default LoginButton;
+export default AddPaymentButton;
