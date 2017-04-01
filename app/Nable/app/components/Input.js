@@ -46,9 +46,10 @@ const styles = StyleSheet.create({
         height: windowHeight/12,
         marginTop: 10,
         marginLeft: windowWidth/12,
-        marginRight: windowWidth/10,
+        marginRight: windowWidth/12,
     },
     input: {
+        color: 'rgba(255, 255, 255, 0.9)',
         textAlign: 'center',
         marginTop: windowHeight/25,
         marginBottom: windowHeight/25,
