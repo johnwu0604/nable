@@ -18,28 +18,42 @@ class Payments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            email: '',
-            userId: this.props.userId
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2
+            }),
+            userId: '58dfbca2b0843231831a2066'
         }
     }
 
     render() {
+        console.log( this.state.dataSource );
+        return (
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={this.renderPayments.bind(this)}
+            />
+        );
+    }
+
+    renderPayments(payment) {
         return (
             <View style={styles.container}>
-                <Text>{this.state.name}</Text>
-                <Text>{this.state.email}</Text>
+                <Text>{payment.name}</Text>
+                <Text>{payment.phone}</Text>
+                <Text>{payment.description}</Text>
+                <Text>{payment.price}</Text>
+                <Text>{payment.date}</Text>
             </View>
         );
     }
 
     componentWillMount() {
-        fetch("http://localhost:5000/api/payment?email=nabil%40mail.mcgill.ca")
+        var userId = this.state.userId;
+        fetch('http://localhost:5000/api/payment?_id=' + userId )
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    name: responseData.name,
-                    email: responseData.email
+                    dataSource: this.state.dataSource.cloneWithRows(responseData)
                 });
             })
             .done();

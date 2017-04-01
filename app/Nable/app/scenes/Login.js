@@ -28,7 +28,7 @@ class Login extends React.Component {
                 <Button
                     onPress={() => {
                       this.props.navigator.push({
-                        name: 'AddPayment',
+                        name: 'Payments',
                       });
                     }}
                     title="Login"
