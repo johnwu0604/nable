@@ -70,7 +70,7 @@ module.exports = function (app) {
         });
     });
 
-    app.delete('/api/user', function(req, res) { // 
+    app.delete('/api/user', function(req, res) { //
         User.remove({ email: req.body.email }, function(err){
             if (!err)
                 console.log(err);
