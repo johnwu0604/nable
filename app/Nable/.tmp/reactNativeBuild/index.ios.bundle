@@ -46450,6 +46450,10 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(42            ); // 42 = react-native
 
+var _List = require(423                    ); // 423 = ../components/List.js
+
+var _List2 = babelHelpers.interopRequireDefault(_List);
+
 var Payments = function (_React$Component) {
     babelHelpers.inherits(Payments, _React$Component);
 
@@ -46472,7 +46476,6 @@ var Payments = function (_React$Component) {
     babelHelpers.createClass(Payments, [{
         key: 'render',
         value: function render() {
-            console.log("hi");
             return _react2.default.createElement(_reactNative.ListView, {
                 dataSource: this.state.dataSource,
                 renderRow: this.renderPayments.bind(this)
@@ -46481,35 +46484,8 @@ var Payments = function (_React$Component) {
     }, {
         key: 'renderPayments',
         value: function renderPayments(payment) {
-            return _react2.default.createElement(
-                _reactNative.View,
-                { style: styles.container },
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    null,
-                    payment.name
-                ),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    null,
-                    payment.phone
-                ),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    null,
-                    payment.description
-                ),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    null,
-                    payment.price
-                ),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    null,
-                    payment.date
-                )
-            );
+            return _react2.default.createElement(_List2.default, { name: payment.name, phone: payment.phone, description: payment.description,
+                price: payment.price, date: payment.date });
         }
     }, {
         key: 'componentWillMount',
@@ -46520,11 +46496,11 @@ var Payments = function (_React$Component) {
                 userId: this.props.userId
             });
             var userId = this.props.userId;
-            fetch('http://localhost:5000/api/payment?_id=' + userId).then(function (response) {
+            fetch('http://localhost:5000/api/user?_id=' + userId).then(function (response) {
                 return response.json();
             }).then(function (responseData) {
                 _this2.setState({
-                    dataSource: _this2.state.dataSource.cloneWithRows(responseData)
+                    dataSource: _this2.state.dataSource.cloneWithRows(responseData.paymentIds)
                 });
             }).done();
         }
@@ -46534,17 +46510,103 @@ var Payments = function (_React$Component) {
 
 ;
 
+exports.default = Payments;
+}, 408, null, "Nable/app/scenes/Payments.js");
+__d(/* Nable/app/components/List.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(42            ); // 42 = react-native
+
+var _Dimensions = require(102         ); // 102 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var List = function (_Component) {
+    babelHelpers.inherits(List, _Component);
+
+    function List(props) {
+        babelHelpers.classCallCheck(this, List);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
+
+        _this.state = {
+            name: _this.props.name,
+            phone: _this.props.phone,
+            description: _this.props.description,
+            price: _this.props.price,
+            date: _this.props.date
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(List, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.container },
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.text },
+                    this.state.name
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.text },
+                    this.state.phone
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.text },
+                    this.state.description
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.text },
+                    this.state.price
+                ),
+                _react2.default.createElement(
+                    _reactNative.Text,
+                    { style: styles.text },
+                    this.state.date
+                ),
+                _react2.default.createElement(_reactNative.View, { style: styles.separator })
+            );
+        }
+    }]);
+    return List;
+}(_react.Component);
+
 var styles = _reactNative.StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
+        width: windowWidth,
+        height: windowHeight / 5,
+        padding: 12,
+        flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        backgroundColor: "#063e77"
+    },
+    text: {
+        marginLeft: 12,
+        fontSize: 16
+    },
+    separator: {
+        flex: 1,
+        height: _reactNative.StyleSheet.hairlineWidth,
+        backgroundColor: '#8E8E8E'
     }
 });
 
-exports.default = Payments;
-}, 408, null, "Nable/app/scenes/Payments.js");
+exports.default = List;
+}, 423, null, "Nable/app/components/List.js");
 __d(/* Nable/app/scenes/AddPayment.js */function(global, require, module, exports) {
 'use strict';
 
