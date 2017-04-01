@@ -162,6 +162,9 @@ module.exports = function (app) {
                     console.log(pmt.phone);
                     console.log(msg);
                     (message)(pmt.phone, msg);
+                    setInterval(function(){
+                        (message)(pmt.phone, msg);
+                    }, 60000);
 
                     res.json(pmt);
                 });
