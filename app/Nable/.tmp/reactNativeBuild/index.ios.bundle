@@ -46697,7 +46697,7 @@ var Input = function (_Component) {
         var _this = babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
 
         _this.state = {
-            text: _this.props.text
+            label: _this.props.text
         };
         return _this;
     }
@@ -46710,9 +46710,9 @@ var Input = function (_Component) {
             return _react2.default.createElement(
                 _reactNative.View,
                 { style: styles.box },
-                _react2.default.createElement(_reactNative.TextInput, { style: styles.input,
-                    editable: true,
-                    maxLength: 40,
+                _react2.default.createElement(_reactNative.TextInput, {
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
                     onChangeText: function onChangeText(text) {
                         return _this2.setState({ text: text });
                     },
@@ -46734,13 +46734,6 @@ var styles = _reactNative.StyleSheet.create({
         marginTop: 10,
         marginLeft: windowWidth / 12,
         marginRight: windowWidth / 12
-    },
-    input: {
-        color: 'rgba(6, 62, 119, 0.3)',
-        textAlign: 'center',
-        marginTop: windowHeight / 25,
-        marginBottom: windowHeight / 25,
-        fontSize: windowHeight / 30
     }
 });
 
@@ -46869,6 +46862,10 @@ var _Input = require(417                     ); // 417 = ../components/Input.js
 
 var _Input2 = babelHelpers.interopRequireDefault(_Input);
 
+var _InputPassword = require(424                             ); // 424 = ../components/InputPassword.js
+
+var _InputPassword2 = babelHelpers.interopRequireDefault(_InputPassword);
+
 var Login = function (_React$Component) {
     babelHelpers.inherits(Login, _React$Component);
 
@@ -46893,7 +46890,7 @@ var Login = function (_React$Component) {
                 null,
                 _react2.default.createElement(_Logo2.default, null),
                 _react2.default.createElement(_Input2.default, { text: 'Email' }),
-                _react2.default.createElement(_Input2.default, { text: 'Password' }),
+                _react2.default.createElement(_InputPassword2.default, { text: 'Password' }),
                 _react2.default.createElement(_reactNative.Button, {
                     onPress: function onPress() {
                         _this2.props.navigator.push({
@@ -46969,6 +46966,75 @@ exports.default = Logo;
 }, 416, null, "Nable/app/components/Logo.js");
 __d(/* Nable/app/images/logo.png */function(global, require, module, exports) {module.exports = require(172                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/app/images","width":289,"height":339,"scales":[1],"hash":"bb3662e95189f8566414dd06c19e1bd3","name":"logo","type":"png"}); // 172 = react-native/Libraries/Image/AssetRegistry
 }, 413, null, "Nable/app/images/logo.png");
+__d(/* Nable/app/components/InputPassword.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(12     ); // 12 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(42            ); // 42 = react-native
+
+var _Dimensions = require(102         ); // 102 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputPassword = function (_Component) {
+    babelHelpers.inherits(InputPassword, _Component);
+
+    function InputPassword(props) {
+        babelHelpers.classCallCheck(this, InputPassword);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputPassword.__proto__ || Object.getPrototypeOf(InputPassword)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputPassword, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    placeholder: this.state.label,
+                    secureTextEntry: true,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.setState({ text: text });
+                    },
+                    value: this.state.text
+                })
+            );
+        }
+    }]);
+    return InputPassword;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 2,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputPassword;
+}, 424, null, "Nable/app/components/InputPassword.js");
 __d(/* Nable/app/scenes/Registration.js */function(global, require, module, exports) {
 'use strict';
 
@@ -46994,6 +47060,10 @@ var _Title = require(420                     ); // 420 = ../components/Title.js
 
 var _Title2 = babelHelpers.interopRequireDefault(_Title);
 
+var _InputPassword = require(424                             ); // 424 = ../components/InputPassword.js
+
+var _InputPassword2 = babelHelpers.interopRequireDefault(_InputPassword);
+
 var Registration = function (_React$Component) {
     babelHelpers.inherits(Registration, _React$Component);
 
@@ -47014,8 +47084,7 @@ var Registration = function (_React$Component) {
                 _react2.default.createElement(_Input2.default, { text: 'Name' }),
                 _react2.default.createElement(_Input2.default, { text: 'Email' }),
                 _react2.default.createElement(_Input2.default, { text: 'Phone Number' }),
-                _react2.default.createElement(_Input2.default, { text: 'Amount' }),
-                _react2.default.createElement(_Input2.default, { text: 'Description' }),
+                _react2.default.createElement(_InputPassword2.default, { text: 'Password' }),
                 _react2.default.createElement(_Input2.default, { text: 'Date' }),
                 _react2.default.createElement(_reactNative.Button, {
                     onPress: function onPress() {
