@@ -14,6 +14,7 @@ import {
 import Input from '../components/Input.js';
 import LoginBackground from '../components/LoginBackground.js';
 import Title from '../components/Title.js';
+import InputPassword from '../components/InputPassword.js';
 
 class Registration extends React.Component {
 
@@ -28,8 +29,7 @@ class Registration extends React.Component {
                 <Input text="Name"></Input>
                 <Input text="Email"></Input>
                 <Input text="Phone Number"></Input>
-                <Input text="Amount"></Input>
-                <Input text="Description"></Input>
+                <InputPassword text="Password"></InputPassword>
                 <Input text="Date"></Input>
                 <Button
                     onPress={() => {

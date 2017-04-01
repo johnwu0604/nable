@@ -12,6 +12,7 @@ import {
     StyleSheet
 } from 'react-native';
 
+import List from '../components/List.js';
 
 class Payments extends React.Component {
 
@@ -36,13 +37,8 @@ class Payments extends React.Component {
 
     renderPayments(payment) {
         return (
-            <View style={styles.container}>
-                <Text>{payment.name}</Text>
-                <Text>{payment.phone}</Text>
-                <Text>{payment.description}</Text>
-                <Text>{payment.price}</Text>
-                <Text>{payment.date}</Text>
-            </View>
+        <List name={payment.name} phone={payment.phone} description={payment.description}
+        price={payment.price} date={payment.date}></List>
         );
     }
 
@@ -51,26 +47,17 @@ class Payments extends React.Component {
             userId: this.props.userId
         });
         var userId = this.props.userId;
-        fetch('http://localhost:5000/api/payment?_id=' + userId )
+        fetch('http://localhost:5000/api/user?_id=' + userId )
             .then((response) => response.json())
             .then((responseData) => {
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(responseData)
+                    dataSource: this.state.dataSource.cloneWithRows(responseData.paymentIds)
                 });
             })
             .done();
     }
 
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    }
-});
 
 
 export default Payments;
