@@ -1,0 +1,10 @@
+{
+  "name": "john-wu",
+  "version": "0.0.0",
+  "description": "Nable",
+  "main": "server.js",
+  "author": "Macrohard",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
