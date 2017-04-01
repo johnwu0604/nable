@@ -11,6 +11,7 @@ import {
 import LoginBackground from '../components/LoginBackground.js';
 import Logo from '../components/Logo.js';
 import Input from '../components/Input.js';
+import InputPassword from '../components/InputPassword.js'
 
 
 class Login extends React.Component {
@@ -27,8 +28,8 @@ class Login extends React.Component {
         return (
             <LoginBackground>
                 <Logo></Logo>
-                <Input text="Email" type="mask"></Input>
-                <Input text="Password"></Input>
+                <Input text="Email"></Input>
+                <InputPassword text="Password"></InputPassword>
                 <Button
                     onPress={() => {
                       this.props.navigator.push({
