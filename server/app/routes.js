@@ -28,6 +28,7 @@ module.exports = function (app) {
         res.json("Hello Nable");
     });
 
+    // USER APIs
     app.post('/api/user', function(req, res) { // tested, checks for duplicate entry
         console.log("POST METHOD WORKS");
 
@@ -60,7 +61,6 @@ module.exports = function (app) {
         User.findOne({ email: req.query.email }, function(err, user){
             if(err)
                 return console.log(err);
-            console.log(user.name + " " + user.email);
             res.send(user);
         });
     });
@@ -71,14 +71,34 @@ module.exports = function (app) {
             if(err)
                 return console.log(err);
 
-            user.name = req.body.name == undefined ? user.name : req.body.name;
-            user.password = req.body.password == undefined ? user.password : req.body.password;
-            user.email = req.body.email == undefined ? user.email : req.body.newEmail;
-            user.save(function(err, usr){
-                if(err)
-                    return console.log(err);
-                res.send(user);
-            });
+            user.name = req.body.newName == undefined ? user.name : req.body.newName;
+            user.password = req.body.newPassword == undefined ? user.password : req.body.newPassword;
+            user.email = req.body.newEmail == undefined ? user.email : req.body.newEmail;
+
+            if(req.body.newEmail == undefined){
+                user.save(function(err, user){
+                    if(err)
+                        return console.log(err);
+                    res.send(user);
+                });
+            }else {
+                User.findOne({ email: user.email }, function(err, usr){
+                    if(err)
+                        return console.log(err);
+
+                    if(usr == undefined){
+                        user.save(function(err, user){
+                            if(err)
+                                return console.log(err);
+                            res.send(user);
+                        });
+                    }else{
+                        res.json("Duplicate entry");
+                    }
+
+                });
+            }
+
         });
     });
 
@@ -90,6 +110,13 @@ module.exports = function (app) {
         });
     });
 
+
+
+    // PAYMENT APIs
+
+    app.post('/api/payment', function(req, res){
+        Payment.
+    });
 
     app.get('/', function (req, res) {
         res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
