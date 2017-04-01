@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import Payments from './scenes/Payments.js';
+import Login from './scenes/Login.js';
 
 export default class nable extends Component {
 
@@ -24,6 +25,10 @@ export default class nable extends Component {
 
     _renderScene(route, navigator) {
         switch (route.name) {
+            case 'Login':
+                return ( <Login
+                    {...route}
+                    navigator={navigator} />);
             case 'Payments':
                 return ( <Payments
                     {...route}
@@ -43,7 +48,7 @@ export default class nable extends Component {
     render() {
         return (
             <Navigator
-                initialRoute={{ name: 'Payments' }}
+                initialRoute={{ name: 'Login' }}
                 configureScene={this._configureScene}
                 renderScene={this._renderScene} />
         );
