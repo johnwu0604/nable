@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var message = require('./API/messageAPI.js');
 
 module.exports = function (app) {
 
@@ -7,6 +8,7 @@ module.exports = function (app) {
         name: String,
         password: String,
         email: String,
+        phone: String,
         paymentIds: Array
     });
 
@@ -39,7 +41,8 @@ module.exports = function (app) {
                 var usr = new User({
                     name: req.body.name,
                     password: req.body.password,
-                    email: req.body.email
+                    email: req.body.email,
+                    phone: req.body.phone
                 });
                 usr.save(function(err, usr){
                     if(err)
@@ -72,6 +75,7 @@ module.exports = function (app) {
             user.name = req.body.newName == undefined ? user.name : req.body.newName;
             user.password = req.body.newPassword == undefined ? user.password : req.body.newPassword;
             user.email = req.body.newEmail == undefined ? user.email : req.body.newEmail;
+            user.phone = req.body.newPhone == undefined ? user.phone : req.body.newPhone;
 
             if(req.body.newEmail == undefined){
                 user.save(function(err, user){
@@ -113,18 +117,18 @@ module.exports = function (app) {
     // PAYMENT APIs
 
     app.post('/api/payment', function(req, res){ // tested
-        var pmt = new Payment({
-            name: req.body.name,
-            category: req.body.category,
-            price: req.body.price,
-            description: req.body.description,
-            phone: req.body.phone,
-            date: req.body.date
-        });
-
         User.findOne({ _id: req.body._id }, function(err, usr){
             if(err)
                 return console.log(err);
+
+            var pmt = new Payment({
+                name: req.body.name,
+                category: req.body.category,
+                price: req.body.price,
+                description: req.body.description,
+                phone: req.body.phone,
+                date: req.body.date
+            });
 
             var newArray = usr.paymentIds.slice();
             newArray.push(pmt);
@@ -136,6 +140,12 @@ module.exports = function (app) {
                 pmt.save(function(err, pmt){
                     if(err)
                         return console.log(err);
+
+                    var msg = "Reminder: Pay back " + pmt.price + " to " + usr.name + " for " + pmt.name;
+                    console.log(pmt.phone);
+                    console.log(msg);
+                    (message)(pmt.phone, msg);
+
                     res.json(pmt);
                 });
             });
@@ -166,10 +176,6 @@ module.exports = function (app) {
                     if(err)
                         return console.log(err);
 
-                    // var index = usr.paymentIds.indexOf(pmt);
-                    // if(index != -1)
-                    //     usr.paymentIds.splice(index, 1);
-
                     for(i in usr.paymentIds){
                         if(usr.paymentIds[i]._id == req.body.p_id && i > -1){
                             usr.paymentIds.splice(i, 1);
@@ -183,7 +189,7 @@ module.exports = function (app) {
                             console.log(err);
 
                         Payment.remove({ _id: req.body.p_id }, function(err){
-                            if (!err)
+                            if (err)
                                 console.log(err);
                             res.send("payment deleted");
                         });
