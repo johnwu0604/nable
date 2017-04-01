@@ -40,7 +40,7 @@ class Input extends Component {
 const styles = StyleSheet.create({
     box: {
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        borderColor: '#000000',
+        borderColor: '#063e77',
         borderWidth: 2,
         borderRadius: 10,
         height: windowHeight/12,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         marginRight: windowWidth/12,
     },
     input: {
-        color: 'rgba(255, 255, 255, 0.9)',
+        color: 'rgba(6, 62, 119, 0.3)',
         textAlign: 'center',
         marginTop: windowHeight/25,
         marginBottom: windowHeight/25,
