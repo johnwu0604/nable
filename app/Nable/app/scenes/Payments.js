@@ -15,11 +15,12 @@ import {
 
 class Payments extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             name: '',
-            email: ''
+            email: '',
+            userId: this.props.userId
         }
     }
 
