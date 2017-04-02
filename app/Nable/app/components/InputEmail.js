@@ -1,6 +1,9 @@
 /**
  * Created by JohnWu on 2017-04-01.
  */
+/**
+ * Created by JohnWu on 2017-04-01.
+ */
 import React, { Component } from 'react';
 import {
     View,
@@ -13,7 +16,7 @@ import Dimensions from 'Dimensions';
 var windowHeight = Dimensions.get('window').height;
 var windowWidth = Dimensions.get('window').width;
 
-class Input extends Component {
+class InputEmail extends Component {
 
     constructor(props) {
         super(props);
@@ -28,7 +31,7 @@ class Input extends Component {
                 <TextInput
                     placeholder={this.state.label}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}
-                    onChangeText={(email) => this.props.updateEmail({email})}
+                    onChangeText={(text) => this.props.updateEmail({text})}
                 />
             </View>
         );
@@ -41,7 +44,7 @@ const styles = StyleSheet.create({
     box: {
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
         borderColor: '#063e77',
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 10,
         height: windowHeight/12,
         marginTop: 10,
@@ -52,4 +55,4 @@ const styles = StyleSheet.create({
 
 
 
-export default Input;
+export default InputEmail;

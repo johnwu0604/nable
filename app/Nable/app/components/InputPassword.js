@@ -32,8 +32,7 @@ class InputPassword extends Component {
                     placeholder={this.state.label}
                     secureTextEntry={true}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}
-                    onChangeText={(text) => this.setState({text})}
-                    value={this.state.text}
+                    onChangeText={(text) => this.props.updatePassword({text})}
                 />
             </View>
         );
