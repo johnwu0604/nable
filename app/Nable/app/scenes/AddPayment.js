@@ -24,7 +24,7 @@ class AddPayment extends React.Component {
     render() {
         return (
             <LoginBackground>
-                <Title text="Add a payment"></Title>
+                <Title text="Add payment"></Title>
                 <Input text="Name"></Input>
                 <Input text="Phone Number"></Input>
                 <Input text="Amount"></Input>
