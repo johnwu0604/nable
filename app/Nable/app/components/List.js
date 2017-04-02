@@ -37,22 +37,23 @@ class List extends Component {
                         <Text style={styles.date}>{this.state.date}</Text>
                         <Text style={styles.description}>{this.state.description}</Text>
                         <Text style={styles.price}>{"$ "+ this.state.price}</Text>
-                        <View style={{position: 'absolute', right: windowWidth/10}}>
-                            <Button
-                                onPress={() =>
-                                    Alert.alert(this.state.description + " - $" + this.state.price,
-                                        "Are you sure you want to delete this entry?",
-                                        [
-                                            {text: 'Delete', onPress: () => console.log('Cancel Pressed!')}, //replace with the actual function
-                                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')}
-                                        ]
-                                    )
 
-                                }
-                                title="Delete"
-                                color="#063e77"
-                            />
-                        </View>
+                    </View>
+                    <View style={{position: 'absolute', right: 4+windowWidth*0.025}}>
+                        <Button
+                            onPress={() =>
+                                Alert.alert(this.state.description + " - $" + this.state.price,
+                                    "Are you sure you want to delete this entry?",
+                                    [
+                                        {text: 'Delete', onPress: () => console.log('Cancel Pressed!')}, //replace with the actual function
+                                        {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')}
+                                    ]
+                                )
+
+                            }
+                            title="Delete"
+                            color="#063e77"
+                        />
                     </View>
                     <View style={styles.separator}></View>
             </View>
@@ -62,13 +63,15 @@ class List extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        // width: windowWidth,
+        width: windowWidth*0.95,
         flexDirection: 'column',
-        backgroundColor: "rgba(242, 244, 254, 0.4)",
+        backgroundColor: "rgba(242, 244, 254, 0.2)",
         borderColor: null,
         borderRadius: 10,
         padding: 4,
-        margin: 4,
+        marginTop: 4,
+        marginBottom: 4,
+        marginLeft: windowWidth*0.025,
 
     },
     name: {
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
     price: {
         color: '#063e77',
         position: 'absolute',
-        right: windowWidth/7 + 60,
+        right: windowWidth/7 + 65,
         alignItems:'flex-end',
     },
 
