@@ -29,6 +29,7 @@ class InputPassword extends Component {
         return (
             <View style={styles.box} >
                 <TextInput
+                    autoCapitalize="none"
                     placeholder={this.state.label}
                     secureTextEntry={true}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}

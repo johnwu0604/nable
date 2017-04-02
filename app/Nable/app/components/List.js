@@ -6,7 +6,9 @@ import {
     View,
     TextInput,
     StyleSheet,
-    Text
+    Text,
+    Alert,
+    Button
 } from 'react-native';
 
 import Dimensions from 'Dimensions';
@@ -38,6 +40,21 @@ class List extends Component {
                         <Text style={styles.price}>{"$ "+ this.state.price}</Text>
                     </View>
                 <View style={styles.separator}></View>
+
+                <Button
+                    onPress={() =>
+                        Alert.alert(this.state.description + " - $" + this.state.price,
+                            "Are you sure you want to delete this entry?",
+                            [
+                                {text: 'Delete', onPress: () => console.log('Cancel Pressed!')}, //replace with the actual function
+                                {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')}
+                            ]
+                        )
+
+                    }
+                    title="Delete"
+                    color="#063e77"
+                />
             </View>
         );
     }

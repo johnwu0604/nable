@@ -9,7 +9,9 @@ import {
     AlertIndicatorIOS,
     ActivityIndicatorIOS,
     AlertIOS,
-    StyleSheet
+    StyleSheet,
+    Button,
+    Navigator
 } from 'react-native';
 
 import List from '../components/List.js';
@@ -32,6 +34,17 @@ class Payments extends React.Component {
     render() {
         return (
                 <LoginBackground>
+                    <View style={{position: 'absolute', right: 5, height: 100, weight: 100}}>
+                        <Button style={{}}
+                            onPress={() =>
+                                this.props.navigator.push({
+                                    name: "AddPayment"
+                                })
+                            }
+                            title = " + "
+                            color="#063e77"
+                        />
+                    </View>
                     <Title text="Pending $$$"></Title>
                     <ListView
                         style={{paddingTop: 11}}
