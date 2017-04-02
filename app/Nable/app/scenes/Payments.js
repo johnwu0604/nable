@@ -62,10 +62,18 @@ class Payments extends React.Component {
         );
     }
 
+    componentWillUpdate() {
+        this.retrievePayments();
+    }
+
     componentWillMount() {
         this.setState({
             userId: this.props.userId
         });
+        this.retrievePayments();
+    }
+
+    retrievePayments() {
         var userId = this.props.userId;
         fetch('http://localhost:5000/api/user?_id=' + userId )
             .then((response) => response.json())

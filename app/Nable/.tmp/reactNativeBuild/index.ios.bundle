@@ -46521,6 +46521,11 @@ var Payments = function (_React$Component) {
                 price: payment.price, date: payment.date });
         }
     }, {
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate() {
+            this.componentWillMount();
+        }
+    }, {
         key: 'componentWillMount',
         value: function componentWillMount() {
             var _this3 = this;
