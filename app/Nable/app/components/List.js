@@ -30,11 +30,13 @@ class List extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>{this.state.name}</Text>
-                <Text style={styles.text}>{this.state.phone}</Text>
-                <Text style={styles.text}>{this.state.description}</Text>
-                <Text style={styles.text}>{this.state.price}</Text>
-                <Text style={styles.text}>{this.state.date}</Text>
+                    <Text style={styles.name}>{this.state.name}</Text>
+
+                    <View style={{flexDirection: 'row', width: windowWidth, marginLeft: 12}}>
+                        <Text style={styles.date}>{this.state.date}</Text>
+                        <Text style={styles.description}>{this.state.description}</Text>
+                        <Text style={styles.price}>{"$ "+ this.state.price}</Text>
+                    </View>
                 <View style={styles.separator}></View>
             </View>
         );
@@ -44,20 +46,48 @@ class List extends Component {
 const styles = StyleSheet.create({
     container: {
         width: windowWidth,
-        height: windowHeight/5,
+        // height: windowHeight/5,
         padding: 12,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: "#063e77"
+        flexDirection: 'column',
+        backgroundColor: "#FFF6EF",
+        // justifyContent: 'space-between',
     },
-    text: {
+    name: {
+        color: '#063e77',
+        fontWeight: 'bold',
+        fontSize: 15,
         marginLeft: 12,
-        fontSize: 16,
+        flexDirection: 'row',
+        width: windowWidth
+
     },
+    phone:{
+        color: '#063e77',
+        fontSize: 14,
+        fontStyle: 'italic',
+        marginLeft: 6,
+    },
+    date: {
+        color: '#063e77',
+        fontSize: 14,
+    },
+    description:{
+        color: '#063e77',
+        position: 'absolute',
+        left: windowWidth/4,
+
+    },
+    price: {
+        color: '#063e77',
+        position: 'absolute',
+        right: windowWidth/7,
+        alignItems:'flex-end',
+    },
+
     separator: {
         flex: 1,
         height: StyleSheet.hairlineWidth,
-        backgroundColor: '#8E8E8E',
+        backgroundColor: '#FFF6EF',
     }
 });
 

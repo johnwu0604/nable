@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 
 import List from '../components/List.js';
+import Title from '../components/Title.js';
+import LoginBackground from '../components/LoginBackground.js';
+import Login from "./Login";
 
 class Payments extends React.Component {
 
@@ -28,11 +31,14 @@ class Payments extends React.Component {
 
     render() {
         return (
-            <ListView
-                dataSource={this.state.dataSource}
-                renderRow={this.renderPayments.bind(this)}
-            />
-        );
+                <LoginBackground>
+                    <Title text="Pending $$$"></Title>
+                    <ListView
+                        style={{paddingTop: 11}}
+                        dataSource={this.state.dataSource}
+                        renderRow={this.renderPayments.bind(this)}/>
+                </LoginBackground>
+    );
     }
 
     renderPayments(payment) {
@@ -57,7 +63,5 @@ class Payments extends React.Component {
             .done();
     }
 
-};
-
-
+}
 export default Payments;
