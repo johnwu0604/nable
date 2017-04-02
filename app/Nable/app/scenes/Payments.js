@@ -61,10 +61,7 @@ class Payments extends React.Component {
         price={payment.price} date={payment.date}></List>
         );
     }
-
-    componentWillUpdate() {
-        this.retrievePayments();
-    }
+    
 
     componentWillMount() {
         this.retrievePayments();

@@ -42,7 +42,7 @@ class Login extends React.Component {
                 <Button
                     onPress={()=>this.authenticate()}
                     title="Login"
-                    color="#063e77"
+                    color="#F2F4FE"
                 />
                 <Button
                     onPress={() => {
@@ -51,7 +51,7 @@ class Login extends React.Component {
                       });
                     }}
                     title="Create a new account"
-                    color="#063e77"
+                    color="#F2F4FE"
                 />
             </LoginBackground>
         );
