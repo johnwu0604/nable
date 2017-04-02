@@ -46849,8 +46849,6 @@ var Login = function (_React$Component) {
             }
             formBody = formBody.join("&");
 
-            console.log("hi");
-
             fetch('http://localhost:5000/api/authentication', {
                 method: 'POST',
                 headers: {
@@ -46987,7 +46985,7 @@ var styles = _reactNative.StyleSheet.create({
     box: {
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
         borderColor: '#063e77',
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 10,
         height: windowHeight / 12,
         marginTop: 10,
@@ -47210,10 +47208,6 @@ var _react2 = babelHelpers.interopRequireDefault(_react);
 
 var _reactNative = require(12            ); // 12 = react-native
 
-var _Input = require(407                     ); // 407 = ../components/Input.js
-
-var _Input2 = babelHelpers.interopRequireDefault(_Input);
-
 var _LoginBackground = require(408                               ); // 408 = ../components/LoginBackground.js
 
 var _LoginBackground2 = babelHelpers.interopRequireDefault(_LoginBackground);
@@ -47222,16 +47216,53 @@ var _Title = require(410                     ); // 410 = ../components/Title.js
 
 var _Title2 = babelHelpers.interopRequireDefault(_Title);
 
-var _InputPassword = require(414                             ); // 414 = ../components/InputPassword.js
+var _InputUsername = require(417                             ); // 417 = ../components/InputUsername.js
 
-var _InputPassword2 = babelHelpers.interopRequireDefault(_InputPassword);
+var _InputUsername2 = babelHelpers.interopRequireDefault(_InputUsername);
+
+var _InputRegistrationEmail = require(418                                      ); // 418 = ../components/InputRegistrationEmail.js
+
+var _InputRegistrationEmail2 = babelHelpers.interopRequireDefault(_InputRegistrationEmail);
+
+var _InputRegistrationPhone = require(421                                      ); // 421 = ../components/InputRegistrationPhone.js
+
+var _InputRegistrationPhone2 = babelHelpers.interopRequireDefault(_InputRegistrationPhone);
+
+var _InputRegistrationPassword = require(420                                         ); // 420 = ../components/InputRegistrationPassword.js
+
+var _InputRegistrationPassword2 = babelHelpers.interopRequireDefault(_InputRegistrationPassword);
 
 var Registration = function (_React$Component) {
     babelHelpers.inherits(Registration, _React$Component);
 
-    function Registration() {
+    function Registration(props) {
         babelHelpers.classCallCheck(this, Registration);
-        return babelHelpers.possibleConstructorReturn(this, (Registration.__proto__ || Object.getPrototypeOf(Registration)).call(this));
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (Registration.__proto__ || Object.getPrototypeOf(Registration)).call(this, props));
+
+        _this.updateUsername = function (text) {
+            _this.setState({ name: text });
+        };
+
+        _this.updateRegistrationEmail = function (text) {
+            _this.setState({ email: text });
+        };
+
+        _this.updateRegistrationPhone = function (text) {
+            _this.setState({ phone: text });
+        };
+
+        _this.updateRegistrationPassword = function (text) {
+            _this.setState({ password: text });
+        };
+
+        _this.state = {
+            name: '',
+            email: '',
+            phone: '',
+            password: ''
+        };
+        return _this;
     }
 
     babelHelpers.createClass(Registration, [{
@@ -47243,19 +47274,66 @@ var Registration = function (_React$Component) {
                 _LoginBackground2.default,
                 null,
                 _react2.default.createElement(_Title2.default, { text: 'Registration' }),
-                _react2.default.createElement(_Input2.default, { text: 'Name' }),
-                _react2.default.createElement(_Input2.default, { text: 'Email' }),
-                _react2.default.createElement(_Input2.default, { text: 'Phone Number' }),
-                _react2.default.createElement(_InputPassword2.default, { text: 'Password' }),
-                _react2.default.createElement(_Input2.default, { text: 'Date' }),
+                _react2.default.createElement(_InputUsername2.default, { text: 'Name', updateUsername: this.updateUsername }),
+                _react2.default.createElement(_InputRegistrationEmail2.default, { text: 'Email', updateRegistrationEmail: this.updateRegistrationEmail }),
+                _react2.default.createElement(_InputRegistrationPhone2.default, { text: 'Phone Number', updateRegistrationPhone: this.updateRegistrationPhone }),
+                _react2.default.createElement(_InputRegistrationPassword2.default, { text: 'Password', updateRegistrationPassword: this.updateRegistrationPassword }),
                 _react2.default.createElement(_reactNative.Button, {
                     onPress: function onPress() {
-                        _this2.props.navigator.pop();
+                        return _this2.createAccount();
                     },
                     title: 'Submit',
                     color: '#063e77'
                 })
             );
+        }
+    }, {
+        key: 'createAccount',
+        value: function createAccount() {
+            var _this3 = this;
+
+            var inputName = this.state.name.text;
+            var inputEmail = this.state.email.text;
+            var inputPhone = this.state.phone.text;
+            var inputPassword = this.state.password.text;
+
+            if (inputName == undefined || inputEmail == undefined || inputPhone == undefined || inputPassword == undefined) {
+                return;
+            }
+
+            var details = {
+                'name': inputName,
+                'email': inputEmail,
+                'phone': inputPhone,
+                'password': inputPassword
+            };
+
+            var formBody = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+
+            fetch('http://localhost:5000/api/user', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formBody
+            }).then(function (response) {
+                return response.json();
+            }).then(function (responseData) {
+                if (responseData == "Duplicate entry") return;
+                _this3.goBackToLastPage();
+            }).done();
+        }
+    }, {
+        key: 'goBackToLastPage',
+        value: function goBackToLastPage() {
+            this.props.navigator.pop();
         }
     }]);
     return Registration;
@@ -47265,6 +47343,275 @@ var Registration = function (_React$Component) {
 
 exports.default = Registration;
 }, 415, null, "Nable/app/scenes/Registration.js");
+__d(/* Nable/app/components/InputUsername.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputUsername = function (_Component) {
+    babelHelpers.inherits(InputUsername, _Component);
+
+    function InputUsername(props) {
+        babelHelpers.classCallCheck(this, InputUsername);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputUsername.__proto__ || Object.getPrototypeOf(InputUsername)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputUsername, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updateUsername({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputUsername;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputUsername;
+}, 417, null, "Nable/app/components/InputUsername.js");
+__d(/* Nable/app/components/InputRegistrationEmail.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputRegistrationEmail = function (_Component) {
+    babelHelpers.inherits(InputRegistrationEmail, _Component);
+
+    function InputRegistrationEmail(props) {
+        babelHelpers.classCallCheck(this, InputRegistrationEmail);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputRegistrationEmail.__proto__ || Object.getPrototypeOf(InputRegistrationEmail)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputRegistrationEmail, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updateRegistrationEmail({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputRegistrationEmail;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputRegistrationEmail;
+}, 418, null, "Nable/app/components/InputRegistrationEmail.js");
+__d(/* Nable/app/components/InputRegistrationPhone.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputRegistrationPhone = function (_Component) {
+    babelHelpers.inherits(InputRegistrationPhone, _Component);
+
+    function InputRegistrationPhone(props) {
+        babelHelpers.classCallCheck(this, InputRegistrationPhone);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputRegistrationPhone.__proto__ || Object.getPrototypeOf(InputRegistrationPhone)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputRegistrationPhone, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updateRegistrationPhone({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputRegistrationPhone;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputRegistrationPhone;
+}, 421, null, "Nable/app/components/InputRegistrationPhone.js");
+__d(/* Nable/app/components/InputRegistrationPassword.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputRegistrationPassword = function (_Component) {
+    babelHelpers.inherits(InputRegistrationPassword, _Component);
+
+    function InputRegistrationPassword(props) {
+        babelHelpers.classCallCheck(this, InputRegistrationPassword);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputRegistrationPassword.__proto__ || Object.getPrototypeOf(InputRegistrationPassword)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputRegistrationPassword, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    placeholder: this.state.label,
+                    secureTextEntry: true,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updateRegistrationPassword({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputRegistrationPassword;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputRegistrationPassword;
+}, 420, null, "Nable/app/components/InputRegistrationPassword.js");
 ;require(215);
 ;require(0);
 //# sourceMappingURL=index.ios.map

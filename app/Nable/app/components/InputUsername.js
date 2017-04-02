@@ -4,6 +4,9 @@
 /**
  * Created by JohnWu on 2017-04-01.
  */
+/**
+ * Created by JohnWu on 2017-04-01.
+ */
 import React, { Component } from 'react';
 import {
     View,
@@ -16,7 +19,7 @@ import Dimensions from 'Dimensions';
 var windowHeight = Dimensions.get('window').height;
 var windowWidth = Dimensions.get('window').width;
 
-class InputEmail extends Component {
+class InputUsername extends Component {
 
     constructor(props) {
         super(props);
@@ -31,7 +34,7 @@ class InputEmail extends Component {
                 <TextInput
                     placeholder={this.state.label}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}
-                    onChangeText={(text) => this.props.updateEmail({text})}
+                    onChangeText={(text) => this.props.updateUsername({text})}
                 />
             </View>
         );
@@ -55,4 +58,4 @@ const styles = StyleSheet.create({
 
 
 
-export default InputEmail;
+export default InputUsername;

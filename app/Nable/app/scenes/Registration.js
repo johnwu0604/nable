@@ -11,35 +11,101 @@ import {
     Button
 } from 'react-native';
 
-import Input from '../components/Input.js';
 import LoginBackground from '../components/LoginBackground.js';
 import Title from '../components/Title.js';
-import InputPassword from '../components/InputPassword.js';
+import InputUsername from '../components/InputUsername.js';
+import InputRegistrationEmail from '../components/InputRegistrationEmail.js';
+import InputRegistrationPhone from '../components/InputRegistrationPhone.js';
+import InputRegistrationPassword from '../components/InputRegistrationPassword.js';
 
 class Registration extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: '',
+            email: '',
+            phone: '',
+            password: ''
+        };
+    }
+
+    updateUsername = (text) => {
+        this.setState({name: text})
+    }
+
+    updateRegistrationEmail = (text) => {
+        this.setState({email: text})
+    }
+
+    updateRegistrationPhone = (text) => {
+        this.setState({phone: text})
+    }
+
+    updateRegistrationPassword = (text) => {
+        this.setState({password: text})
     }
 
     render() {
         return (
             <LoginBackground>
                 <Title text="Registration"></Title>
-                <Input text="Name"></Input>
-                <Input text="Email"></Input>
-                <Input text="Phone Number"></Input>
-                <InputPassword text="Password"></InputPassword>
-                <Input text="Date"></Input>
+                <InputUsername text="Name" updateUsername={this.updateUsername}></InputUsername>
+                <InputRegistrationEmail text="Email" updateRegistrationEmail={this.updateRegistrationEmail}></InputRegistrationEmail>
+                <InputRegistrationPhone text="Phone Number" updateRegistrationPhone={this.updateRegistrationPhone}></InputRegistrationPhone>
+                <InputRegistrationPassword text="Password" updateRegistrationPassword={this.updateRegistrationPassword}></InputRegistrationPassword>
                 <Button
-                    onPress={() => {
-                        this.props.navigator.pop();
-                    }}
+                    onPress={()=>this.createAccount()}
                     title="Submit"
                     color="#063e77"
                 />
             </LoginBackground>
         );
+    }
+
+    createAccount() {
+        var inputName = this.state.name.text;
+        var inputEmail = this.state.email.text;
+        var inputPhone = this.state.phone.text;
+        var inputPassword = this.state.password.text;
+
+        if ( inputName == undefined || inputEmail == undefined ||  inputPhone == undefined || inputPassword == undefined) {
+            return;
+        }
+
+        var details = {
+            'name': inputName,
+            'email': inputEmail,
+            'phone': inputPhone,
+            'password': inputPassword
+        };
+
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+        fetch('http://localhost:5000/api/user', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formBody
+        }).then((response) => response.json())
+            .then((responseData) => {
+                if ( responseData == "Duplicate entry" ) return;
+                this.goBackToLastPage();
+            })
+            .done();
+
+    }
+
+    goBackToLastPage() {
+        this.props.navigator.pop();
     }
 
 };

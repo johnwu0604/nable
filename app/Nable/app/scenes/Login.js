@@ -13,7 +13,6 @@ import Logo from '../components/Logo.js';
 import InputEmail from '../components/InputEmail.js';
 import InputPassword from '../components/InputPassword.js'
 
-
 class Login extends React.Component {
 
 
@@ -74,8 +73,6 @@ class Login extends React.Component {
             formBody.push(encodedKey + "=" + encodedValue);
         }
         formBody = formBody.join("&");
-
-        console.log("hi");
 
         fetch('http://localhost:5000/api/authentication', {
             method: 'POST',
