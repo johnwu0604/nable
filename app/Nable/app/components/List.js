@@ -20,6 +20,8 @@ class List extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            userId: this.props.userId,
+            paymentId: this.props.paymentId,
             name: this.props.name,
             phone: this.props.phone,
             description: this.props.description,
@@ -45,7 +47,7 @@ class List extends Component {
                                 Alert.alert(this.state.description + " - $" + this.state.price,
                                     "Are you sure you want to delete this entry?",
                                     [
-                                        {text: 'Delete', onPress: () => console.log('Cancel Pressed!')}, //replace with the actual function
+                                        {text: 'Delete', onPress: () => this.deletePayment() },
                                         {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')}
                                     ]
                                 )
@@ -55,9 +57,39 @@ class List extends Component {
                             color="#063e77"
                         />
                     </View>
-                    <View style={styles.separator}></View>
             </View>
         );
+    }
+
+    deletePayment() {
+        var paymentId = this.state.paymentId;
+        var userId = this.state.userId;
+
+        if ( paymentId == undefined || userId == undefined ) {
+            return;
+        }
+
+        var details = {
+            'p_id': paymentId,
+            '_id': userId
+        };
+
+        var formBody = [];
+        for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+
+        fetch('http://localhost:5000/api/payment', {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formBody
+        });
     }
 }
 

@@ -27,7 +27,7 @@ class Payments extends React.Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2
             }),
-            userId: ''
+            userId: this.props.userId
         }
     }
 
@@ -57,19 +57,13 @@ class Payments extends React.Component {
 
     renderPayments(payment) {
         return (
-        <List name={payment.name} phone={payment.phone} description={payment.description}
+        <List userId={this.state.userId} paymentId={payment._id} name={payment.name} phone={payment.phone} description={payment.description}
         price={payment.price} date={payment.date}></List>
         );
     }
-
-    componentWillUpdate() {
-        this.retrievePayments();
-    }
+    
 
     componentWillMount() {
-        this.setState({
-            userId: this.props.userId
-        });
         this.retrievePayments();
     }
 
