@@ -46454,6 +46454,18 @@ var _List = require(405                    ); // 405 = ../components/List.js
 
 var _List2 = babelHelpers.interopRequireDefault(_List);
 
+var _Title = require(410                     ); // 410 = ../components/Title.js
+
+var _Title2 = babelHelpers.interopRequireDefault(_Title);
+
+var _LoginBackground = require(408                               ); // 408 = ../components/LoginBackground.js
+
+var _LoginBackground2 = babelHelpers.interopRequireDefault(_LoginBackground);
+
+var _Login = require(411      ); // 411 = ./Login
+
+var _Login2 = babelHelpers.interopRequireDefault(_Login);
+
 var Payments = function (_React$Component) {
     babelHelpers.inherits(Payments, _React$Component);
 
@@ -46476,10 +46488,15 @@ var Payments = function (_React$Component) {
     babelHelpers.createClass(Payments, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_reactNative.ListView, {
-                dataSource: this.state.dataSource,
-                renderRow: this.renderPayments.bind(this)
-            });
+            return _react2.default.createElement(
+                _LoginBackground2.default,
+                null,
+                _react2.default.createElement(_Title2.default, { text: 'Pending $$$' }),
+                _react2.default.createElement(_reactNative.ListView, {
+                    style: { paddingTop: 11 },
+                    dataSource: this.state.dataSource,
+                    renderRow: this.renderPayments.bind(this) })
+            );
         }
     }, {
         key: 'renderPayments',
@@ -46507,8 +46524,6 @@ var Payments = function (_React$Component) {
     }]);
     return Payments;
 }(_react2.default.Component);
-
-;
 
 exports.default = Payments;
 }, 404, null, "Nable/app/scenes/Payments.js");
@@ -46555,28 +46570,27 @@ var List = function (_Component) {
                 { style: styles.container },
                 _react2.default.createElement(
                     _reactNative.Text,
-                    { style: styles.text },
+                    { style: styles.name },
                     this.state.name
                 ),
                 _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: styles.text },
-                    this.state.phone
-                ),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: styles.text },
-                    this.state.description
-                ),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: styles.text },
-                    this.state.price
-                ),
-                _react2.default.createElement(
-                    _reactNative.Text,
-                    { style: styles.text },
-                    this.state.date
+                    _reactNative.View,
+                    { style: { flexDirection: 'row', width: windowWidth, marginLeft: 12 } },
+                    _react2.default.createElement(
+                        _reactNative.Text,
+                        { style: styles.date },
+                        this.state.date
+                    ),
+                    _react2.default.createElement(
+                        _reactNative.Text,
+                        { style: styles.description },
+                        this.state.description
+                    ),
+                    _react2.default.createElement(
+                        _reactNative.Text,
+                        { style: styles.price },
+                        "$ " + this.state.price
+                    )
                 ),
                 _react2.default.createElement(_reactNative.View, { style: styles.separator })
             );
@@ -46588,201 +46602,52 @@ var List = function (_Component) {
 var styles = _reactNative.StyleSheet.create({
     container: {
         width: windowWidth,
-        height: windowHeight / 5,
+
         padding: 12,
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: "#063e77"
+        flexDirection: 'column',
+        backgroundColor: "#FFF6EF"
     },
-    text: {
+    name: {
+        color: '#063e77',
+        fontWeight: 'bold',
+        fontSize: 15,
         marginLeft: 12,
-        fontSize: 16
+        flexDirection: 'row',
+        width: windowWidth
+
     },
+    phone: {
+        color: '#063e77',
+        fontSize: 14,
+        fontStyle: 'italic',
+        marginLeft: 6
+    },
+    date: {
+        color: '#063e77',
+        fontSize: 14
+    },
+    description: {
+        color: '#063e77',
+        position: 'absolute',
+        left: windowWidth / 4
+
+    },
+    price: {
+        color: '#063e77',
+        position: 'absolute',
+        right: windowWidth / 7,
+        alignItems: 'flex-end'
+    },
+
     separator: {
         flex: 1,
         height: _reactNative.StyleSheet.hairlineWidth,
-        backgroundColor: '#8E8E8E'
+        backgroundColor: '#FFF6EF'
     }
 });
 
 exports.default = List;
 }, 405, null, "Nable/app/components/List.js");
-__d(/* Nable/app/scenes/AddPayment.js */function(global, require, module, exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require(280    ); // 280 = react
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _reactNative = require(12            ); // 12 = react-native
-
-var _Input = require(407                     ); // 407 = ../components/Input.js
-
-var _Input2 = babelHelpers.interopRequireDefault(_Input);
-
-var _LoginBackground = require(408                               ); // 408 = ../components/LoginBackground.js
-
-var _LoginBackground2 = babelHelpers.interopRequireDefault(_LoginBackground);
-
-var _Title = require(410                     ); // 410 = ../components/Title.js
-
-var _Title2 = babelHelpers.interopRequireDefault(_Title);
-
-var AddPayment = function (_React$Component) {
-    babelHelpers.inherits(AddPayment, _React$Component);
-
-    function AddPayment() {
-        babelHelpers.classCallCheck(this, AddPayment);
-        return babelHelpers.possibleConstructorReturn(this, (AddPayment.__proto__ || Object.getPrototypeOf(AddPayment)).call(this));
-    }
-
-    babelHelpers.createClass(AddPayment, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                _LoginBackground2.default,
-                null,
-                _react2.default.createElement(_Title2.default, { text: 'Add a payment' }),
-                _react2.default.createElement(_Input2.default, { text: 'Name' }),
-                _react2.default.createElement(_Input2.default, { text: 'Phone Number' }),
-                _react2.default.createElement(_Input2.default, { text: 'Amount' }),
-                _react2.default.createElement(_Input2.default, { text: 'Description' }),
-                _react2.default.createElement(_Input2.default, { text: 'Date' }),
-                _react2.default.createElement(_reactNative.Button, {
-                    onPress: function onPress() {
-                        _this2.props.navigator.pop();
-                    },
-                    title: 'Submit',
-                    color: '#063e77'
-                })
-            );
-        }
-    }]);
-    return AddPayment;
-}(_react2.default.Component);
-
-;
-
-exports.default = AddPayment;
-}, 406, null, "Nable/app/scenes/AddPayment.js");
-__d(/* Nable/app/components/Input.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require(280    ); // 280 = react
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _reactNative = require(12            ); // 12 = react-native
-
-var _Dimensions = require(101         ); // 101 = Dimensions
-
-var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
-
-var windowHeight = _Dimensions2.default.get('window').height;
-var windowWidth = _Dimensions2.default.get('window').width;
-
-var Input = function (_Component) {
-    babelHelpers.inherits(Input, _Component);
-
-    function Input(props) {
-        babelHelpers.classCallCheck(this, Input);
-
-        var _this = babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
-
-        _this.state = {
-            label: _this.props.text
-        };
-        return _this;
-    }
-
-    babelHelpers.createClass(Input, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                _reactNative.View,
-                { style: styles.box },
-                _react2.default.createElement(_reactNative.TextInput, {
-                    placeholder: this.state.label,
-                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
-                    onChangeText: function onChangeText(email) {
-                        return _this2.props.updateEmail({ email: email });
-                    }
-                })
-            );
-        }
-    }]);
-    return Input;
-}(_react.Component);
-
-var styles = _reactNative.StyleSheet.create({
-    box: {
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        borderColor: '#063e77',
-        borderWidth: 2,
-        borderRadius: 10,
-        height: windowHeight / 12,
-        marginTop: 10,
-        marginLeft: windowWidth / 12,
-        marginRight: windowWidth / 12
-    }
-});
-
-exports.default = Input;
-}, 407, null, "Nable/app/components/Input.js");
-__d(/* Nable/app/components/LoginBackground.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _react = require(280    ); // 280 = react
-
-var _react2 = babelHelpers.interopRequireDefault(_react);
-
-var _reactNative = require(12            ); // 12 = react-native
-
-var LoginBackground = function (_Component) {
-    babelHelpers.inherits(LoginBackground, _Component);
-
-    function LoginBackground() {
-        babelHelpers.classCallCheck(this, LoginBackground);
-        return babelHelpers.possibleConstructorReturn(this, (LoginBackground.__proto__ || Object.getPrototypeOf(LoginBackground)).apply(this, arguments));
-    }
-
-    babelHelpers.createClass(LoginBackground, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _reactNative.Image,
-                { source: require(409                       ), // 409 = ../images/background.jpg
-                    style: styles.backgroundImage },
-                this.props.children
-            );
-        }
-    }]);
-    return LoginBackground;
-}(_react.Component);
-
-var styles = _reactNative.StyleSheet.create({
-    backgroundImage: {
-        flex: 1,
-        width: null,
-        height: null,
-        resizeMode: 'cover'
-    }
-});
-
-exports.default = LoginBackground;
-}, 408, null, "Nable/app/components/LoginBackground.js");
-__d(/* Nable/app/images/background.jpg */function(global, require, module, exports) {module.exports = require(171                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/app/images","width":564,"height":1001,"scales":[1],"hash":"6bf59600dc8e615aab9c2271b25d5e99","name":"background","type":"jpg"}); // 171 = react-native/Libraries/Image/AssetRegistry
-}, 409, null, "Nable/app/images/background.jpg");
 __d(/* Nable/app/components/Title.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
     value: true
 });
@@ -46837,6 +46702,51 @@ var styles = _reactNative.StyleSheet.create({
 
 exports.default = Input;
 }, 410, null, "Nable/app/components/Title.js");
+__d(/* Nable/app/components/LoginBackground.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var LoginBackground = function (_Component) {
+    babelHelpers.inherits(LoginBackground, _Component);
+
+    function LoginBackground() {
+        babelHelpers.classCallCheck(this, LoginBackground);
+        return babelHelpers.possibleConstructorReturn(this, (LoginBackground.__proto__ || Object.getPrototypeOf(LoginBackground)).apply(this, arguments));
+    }
+
+    babelHelpers.createClass(LoginBackground, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                _reactNative.Image,
+                { source: require(409                       ), // 409 = ../images/background.jpg
+                    style: styles.backgroundImage },
+                this.props.children
+            );
+        }
+    }]);
+    return LoginBackground;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    backgroundImage: {
+        flex: 1,
+        width: null,
+        height: null,
+        resizeMode: 'cover'
+    }
+});
+
+exports.default = LoginBackground;
+}, 408, null, "Nable/app/components/LoginBackground.js");
+__d(/* Nable/app/images/background.jpg */function(global, require, module, exports) {module.exports = require(171                                         ).registerAsset({"__packager_asset":true,"httpServerLocation":"/assets/app/images","width":564,"height":1001,"scales":[1],"hash":"6bf59600dc8e615aab9c2271b25d5e99","name":"background","type":"jpg"}); // 171 = react-native/Libraries/Image/AssetRegistry
+}, 409, null, "Nable/app/images/background.jpg");
 __d(/* Nable/app/scenes/Login.js */function(global, require, module, exports) {'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46956,7 +46866,6 @@ var Login = function (_React$Component) {
                 _this3.setState({
                     userId: responseData._id
                 });
-                console.log("ehllo");
                 _this3.openNextPage();
             }).done();
         }
@@ -47146,7 +47055,7 @@ var styles = _reactNative.StyleSheet.create({
     box: {
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
         borderColor: '#063e77',
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 10,
         height: windowHeight / 12,
         marginTop: 10,
@@ -47157,6 +47066,137 @@ var styles = _reactNative.StyleSheet.create({
 
 exports.default = InputPassword;
 }, 414, null, "Nable/app/components/InputPassword.js");
+__d(/* Nable/app/scenes/AddPayment.js */function(global, require, module, exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Input = require(407                     ); // 407 = ../components/Input.js
+
+var _Input2 = babelHelpers.interopRequireDefault(_Input);
+
+var _LoginBackground = require(408                               ); // 408 = ../components/LoginBackground.js
+
+var _LoginBackground2 = babelHelpers.interopRequireDefault(_LoginBackground);
+
+var _Title = require(410                     ); // 410 = ../components/Title.js
+
+var _Title2 = babelHelpers.interopRequireDefault(_Title);
+
+var AddPayment = function (_React$Component) {
+    babelHelpers.inherits(AddPayment, _React$Component);
+
+    function AddPayment() {
+        babelHelpers.classCallCheck(this, AddPayment);
+        return babelHelpers.possibleConstructorReturn(this, (AddPayment.__proto__ || Object.getPrototypeOf(AddPayment)).call(this));
+    }
+
+    babelHelpers.createClass(AddPayment, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _LoginBackground2.default,
+                null,
+                _react2.default.createElement(_Title2.default, { text: 'Add payment' }),
+                _react2.default.createElement(_Input2.default, { text: 'Name' }),
+                _react2.default.createElement(_Input2.default, { text: 'Phone Number' }),
+                _react2.default.createElement(_Input2.default, { text: 'Amount' }),
+                _react2.default.createElement(_Input2.default, { text: 'Description' }),
+                _react2.default.createElement(_Input2.default, { text: 'Date' }),
+                _react2.default.createElement(_reactNative.Button, {
+                    onPress: function onPress() {
+                        _this2.props.navigator.pop();
+                    },
+                    title: 'Submit',
+                    color: '#063e77'
+                })
+            );
+        }
+    }]);
+    return AddPayment;
+}(_react2.default.Component);
+
+;
+
+exports.default = AddPayment;
+}, 406, null, "Nable/app/scenes/AddPayment.js");
+__d(/* Nable/app/components/Input.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var Input = function (_Component) {
+    babelHelpers.inherits(Input, _Component);
+
+    function Input(props) {
+        babelHelpers.classCallCheck(this, Input);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (Input.__proto__ || Object.getPrototypeOf(Input)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(Input, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(email) {
+                        return _this2.props.updateEmail({ email: email });
+                    }
+                })
+            );
+        }
+    }]);
+    return Input;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = Input;
+}, 407, null, "Nable/app/components/Input.js");
 __d(/* Nable/app/scenes/Registration.js */function(global, require, module, exports) {
 'use strict';
 
