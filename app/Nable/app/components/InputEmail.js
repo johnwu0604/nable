@@ -1,5 +1,5 @@
 /**
- * Created by TiffanyWang on 2017-04-01.
+ * Created by JohnWu on 2017-04-01.
  */
 /**
  * Created by JohnWu on 2017-04-01.
@@ -16,7 +16,7 @@ import Dimensions from 'Dimensions';
 var windowHeight = Dimensions.get('window').height;
 var windowWidth = Dimensions.get('window').width;
 
-class InputPassword extends Component {
+class InputEmail extends Component {
 
     constructor(props) {
         super(props);
@@ -30,13 +30,13 @@ class InputPassword extends Component {
             <View style={styles.box} >
                 <TextInput
                     placeholder={this.state.label}
-                    secureTextEntry={true}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}
-                    onChangeText={(text) => this.props.updatePassword({text})}
+                    onChangeText={(text) => this.props.updateEmail({text})}
                 />
             </View>
         );
     }
+
 }
 
 
@@ -53,4 +53,6 @@ const styles = StyleSheet.create({
     }
 });
 
-export default InputPassword;
+
+
+export default InputEmail;

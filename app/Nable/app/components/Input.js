@@ -28,8 +28,7 @@ class Input extends Component {
                 <TextInput
                     placeholder={this.state.label}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}
-                    onChangeText={(text) => this.setState({text})}
-                    value={this.state.text}
+                    onChangeText={(email) => this.props.updateEmail({email})}
                 />
             </View>
         );
