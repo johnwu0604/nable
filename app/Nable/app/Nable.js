@@ -59,7 +59,7 @@ export default class nable extends Component {
     render() {
         return (
             <Navigator
-                initialRoute={{ name: 'Payments' }}
+                initialRoute={{ name: 'Login' }}
                 configureScene={this._configureScene}
                 renderScene={this._renderScene} />
         );

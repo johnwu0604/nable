@@ -38,7 +38,8 @@ class Payments extends React.Component {
                         <Button
                             onPress={() =>
                                 this.props.navigator.push({
-                                    name: "AddPayment"
+                                    name: "AddPayment",
+                                    userId: this.state.userId
                                 })
                             }
                             title = " Add Payment "
