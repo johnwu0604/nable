@@ -68,7 +68,7 @@ class AddPayment extends React.Component {
                 <Button
                     onPress={()=>this.addPayment()}
                     title="Submit"
-                    color="#063e77"
+                    color="#F2F4FE"
                 />
             </LoginBackground>
         );

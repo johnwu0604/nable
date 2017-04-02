@@ -40,7 +40,7 @@ class InputRegistrationPassword extends Component {
 const styles = StyleSheet.create({
     box: {
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        borderColor: '#063e77',
+        borderColor: 'rgba(6, 62, 119, 0.5)',
         borderWidth: 1,
         borderRadius: 10,
         height: windowHeight/12,

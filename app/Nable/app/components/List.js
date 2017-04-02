@@ -13,7 +13,6 @@ import {
 
 import Dimensions from 'Dimensions';
 
-var windowHeight = Dimensions.get('window').height;
 var windowWidth = Dimensions.get('window').width;
 
 class List extends Component {
@@ -38,23 +37,24 @@ class List extends Component {
                         <Text style={styles.date}>{this.state.date}</Text>
                         <Text style={styles.description}>{this.state.description}</Text>
                         <Text style={styles.price}>{"$ "+ this.state.price}</Text>
+                        <View style={{position: 'absolute', right: windowWidth/10}}>
+                            <Button
+                                onPress={() =>
+                                    Alert.alert(this.state.description + " - $" + this.state.price,
+                                        "Are you sure you want to delete this entry?",
+                                        [
+                                            {text: 'Delete', onPress: () => console.log('Cancel Pressed!')}, //replace with the actual function
+                                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')}
+                                        ]
+                                    )
+
+                                }
+                                title="Delete"
+                                color="#063e77"
+                            />
+                        </View>
                     </View>
-                <View style={styles.separator}></View>
-
-                <Button
-                    onPress={() =>
-                        Alert.alert(this.state.description + " - $" + this.state.price,
-                            "Are you sure you want to delete this entry?",
-                            [
-                                {text: 'Delete', onPress: () => console.log('Cancel Pressed!')}, //replace with the actual function
-                                {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')}
-                            ]
-                        )
-
-                    }
-                    title="Delete"
-                    color="#063e77"
-                />
+                    <View style={styles.separator}></View>
             </View>
         );
     }
@@ -62,12 +62,14 @@ class List extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: windowWidth,
-        // height: windowHeight/5,
-        padding: 12,
+        // width: windowWidth,
         flexDirection: 'column',
-        backgroundColor: "#FFF6EF",
-        // justifyContent: 'space-between',
+        backgroundColor: "rgba(242, 244, 254, 0.4)",
+        borderColor: null,
+        borderRadius: 10,
+        padding: 4,
+        margin: 4,
+
     },
     name: {
         color: '#063e77',
@@ -75,8 +77,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: 12,
         flexDirection: 'row',
-        width: windowWidth
-
     },
     phone:{
         color: '#063e77',
@@ -97,15 +97,16 @@ const styles = StyleSheet.create({
     price: {
         color: '#063e77',
         position: 'absolute',
-        right: windowWidth/7,
+        right: windowWidth/7 + 60,
         alignItems:'flex-end',
     },
 
     separator: {
         flex: 1,
-        height: StyleSheet.hairlineWidth,
-        backgroundColor: '#FFF6EF',
-    }
+        height: 4,
+        backgroundColor: null,
+    },
+
 });
 
 
