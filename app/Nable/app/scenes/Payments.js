@@ -34,14 +34,14 @@ class Payments extends React.Component {
     render() {
         return (
                 <LoginBackground>
-                    <View style={{position: 'absolute', right: 5, height: 100, weight: 100}}>
-                        <Button style={{}}
+                    <View style={{position: 'absolute', right: 9, top: 13}}>
+                        <Button
                             onPress={() =>
                                 this.props.navigator.push({
                                     name: "AddPayment"
                                 })
                             }
-                            title = " + "
+                            title = " Add Payment "
                             color="#063e77"
                         />
                     </View>
