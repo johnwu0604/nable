@@ -4,8 +4,8 @@
 // Twilio Credentials
 
 module.exports = function(to, msg){
-    var accountSid = 'AC4cc12537e685d9d199ea0d4f06aa3aec';
-    var authToken = '89ff65673b2b8b92df329c36356c4ee0';
+    var accountSid = 'ACfa6a94e8c6b9ccb6fe0297790ed6f9d9';
+    var authToken = '81b7c455fa66864166eaac74381656b1';
 
     //require the Twilio module and create a REST client
     var client = require('twilio')(accountSid, authToken);
