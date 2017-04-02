@@ -46499,7 +46499,8 @@ var Payments = function (_React$Component) {
                     _react2.default.createElement(_reactNative.Button, {
                         onPress: function onPress() {
                             return _this2.props.navigator.push({
-                                name: "AddPayment"
+                                name: "AddPayment",
+                                userId: _this2.state.userId
                             });
                         },
                         title: ' Add Payment ',
@@ -47119,12 +47120,63 @@ var _Title = require(410                     ); // 410 = ../components/Title.js
 
 var _Title2 = babelHelpers.interopRequireDefault(_Title);
 
+var _InputLenderName = require(422                               ); // 422 = ../components/InputLenderName.js
+
+var _InputLenderName2 = babelHelpers.interopRequireDefault(_InputLenderName);
+
+var _InputDate = require(423                         ); // 423 = ../components/InputDate.js
+
+var _InputDate2 = babelHelpers.interopRequireDefault(_InputDate);
+
+var _InputDescription = require(424                                ); // 424 = ../components/InputDescription.js
+
+var _InputDescription2 = babelHelpers.interopRequireDefault(_InputDescription);
+
+var _InputPhoneNumber = require(425                                ); // 425 = ../components/InputPhoneNumber.js
+
+var _InputPhoneNumber2 = babelHelpers.interopRequireDefault(_InputPhoneNumber);
+
+var _InputPayment = require(426                            ); // 426 = ../components/InputPayment.js
+
+var _InputPayment2 = babelHelpers.interopRequireDefault(_InputPayment);
+
 var AddPayment = function (_React$Component) {
     babelHelpers.inherits(AddPayment, _React$Component);
 
-    function AddPayment() {
+    function AddPayment(props) {
         babelHelpers.classCallCheck(this, AddPayment);
-        return babelHelpers.possibleConstructorReturn(this, (AddPayment.__proto__ || Object.getPrototypeOf(AddPayment)).call(this));
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (AddPayment.__proto__ || Object.getPrototypeOf(AddPayment)).call(this, props));
+
+        _this.updateLenderName = function (text) {
+            _this.setState({ name: text });
+        };
+
+        _this.updatePhoneNumber = function (text) {
+            _this.setState({ phone: text });
+        };
+
+        _this.updatePrice = function (text) {
+            _this.setState({ price: text });
+        };
+
+        _this.updateDescription = function (text) {
+            _this.setState({ description: text });
+        };
+
+        _this.updateDate = function (text) {
+            _this.setState({ date: text });
+        };
+
+        _this.state = {
+            name: '',
+            phone: '',
+            price: '',
+            description: '',
+            date: '',
+            userId: _this.props.userId
+        };
+        return _this;
     }
 
     babelHelpers.createClass(AddPayment, [{
@@ -47136,19 +47188,72 @@ var AddPayment = function (_React$Component) {
                 _LoginBackground2.default,
                 null,
                 _react2.default.createElement(_Title2.default, { text: 'Add payment' }),
-                _react2.default.createElement(_Input2.default, { text: 'Name' }),
-                _react2.default.createElement(_Input2.default, { text: 'Phone Number' }),
-                _react2.default.createElement(_Input2.default, { text: 'Amount' }),
-                _react2.default.createElement(_Input2.default, { text: 'Description' }),
-                _react2.default.createElement(_Input2.default, { text: 'Date' }),
+                _react2.default.createElement(_InputLenderName2.default, { text: 'Lender Name', updateLenderName: this.updateLenderName }),
+                _react2.default.createElement(_InputPhoneNumber2.default, { text: 'Phone Number', updatePhoneNumber: this.updatePhoneNumber }),
+                _react2.default.createElement(_InputPayment2.default, { text: 'Amount', updatePrice: this.updatePrice }),
+                _react2.default.createElement(_InputDescription2.default, { text: 'Description', updateDescription: this.updateDescription }),
+                _react2.default.createElement(_InputDate2.default, { text: 'Date', updateDate: this.updateDate }),
                 _react2.default.createElement(_reactNative.Button, {
                     onPress: function onPress() {
-                        _this2.props.navigator.pop();
+                        return _this2.addPayment();
                     },
                     title: 'Submit',
                     color: '#063e77'
                 })
             );
+        }
+    }, {
+        key: 'addPayment',
+        value: function addPayment() {
+            var _this3 = this;
+
+            var inputId = this.state.userId;
+            var inputName = this.state.name.text;
+            var inputPhone = this.state.phone.text;
+            var inputPrice = this.state.price.text;
+            var inputDescription = this.state.description.text;
+            var inputDate = this.state.date.text;
+
+            if (inputId == undefined || inputName == undefined || inputPhone == undefined || inputPrice == undefined || inputDescription == undefined || inputDate == undefined) {
+                return;
+            }
+
+            var details = {
+                '_id': inputId,
+                'name': inputName,
+                'price': inputPrice,
+                'description': inputDescription,
+                'phone': inputPhone,
+                'date': inputDate
+            };
+
+            var formBody = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+
+            fetch('http://localhost:5000/api/payment', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formBody
+            }).then(function (response) {
+                return response.json();
+            }).then(function (responseData) {
+                if (responseData == "Duplicate entry") return;
+                console.log(responseData);
+                _this3.goBackToLastPage();
+            }).done();
+        }
+    }, {
+        key: 'goBackToLastPage',
+        value: function goBackToLastPage() {
+            this.props.navigator.pop();
         }
     }]);
     return AddPayment;
@@ -47226,6 +47331,346 @@ var styles = _reactNative.StyleSheet.create({
 
 exports.default = Input;
 }, 407, null, "Nable/app/components/Input.js");
+__d(/* Nable/app/components/InputLenderName.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputLenderName = function (_Component) {
+    babelHelpers.inherits(InputLenderName, _Component);
+
+    function InputLenderName(props) {
+        babelHelpers.classCallCheck(this, InputLenderName);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputLenderName.__proto__ || Object.getPrototypeOf(InputLenderName)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputLenderName, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    autoCapitalize: 'none',
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updateLenderName({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputLenderName;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputLenderName;
+}, 422, null, "Nable/app/components/InputLenderName.js");
+__d(/* Nable/app/components/InputDate.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputDate = function (_Component) {
+    babelHelpers.inherits(InputDate, _Component);
+
+    function InputDate(props) {
+        babelHelpers.classCallCheck(this, InputDate);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputDate.__proto__ || Object.getPrototypeOf(InputDate)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputDate, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    autoCapitalize: 'none',
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updateDate({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputDate;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputDate;
+}, 423, null, "Nable/app/components/InputDate.js");
+__d(/* Nable/app/components/InputDescription.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputDescription = function (_Component) {
+    babelHelpers.inherits(InputDescription, _Component);
+
+    function InputDescription(props) {
+        babelHelpers.classCallCheck(this, InputDescription);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputDescription.__proto__ || Object.getPrototypeOf(InputDescription)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputDescription, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    autoCapitalize: 'none',
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updateDescription({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputDescription;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputDescription;
+}, 424, null, "Nable/app/components/InputDescription.js");
+__d(/* Nable/app/components/InputPhoneNumber.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputPhoneNumber = function (_Component) {
+    babelHelpers.inherits(InputPhoneNumber, _Component);
+
+    function InputPhoneNumber(props) {
+        babelHelpers.classCallCheck(this, InputPhoneNumber);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputPhoneNumber.__proto__ || Object.getPrototypeOf(InputPhoneNumber)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputPhoneNumber, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    autoCapitalize: 'none',
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updatePhoneNumber({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputPhoneNumber;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputPhoneNumber;
+}, 425, null, "Nable/app/components/InputPhoneNumber.js");
+__d(/* Nable/app/components/InputPayment.js */function(global, require, module, exports) {Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require(280    ); // 280 = react
+
+var _react2 = babelHelpers.interopRequireDefault(_react);
+
+var _reactNative = require(12            ); // 12 = react-native
+
+var _Dimensions = require(101         ); // 101 = Dimensions
+
+var _Dimensions2 = babelHelpers.interopRequireDefault(_Dimensions);
+
+var windowHeight = _Dimensions2.default.get('window').height;
+var windowWidth = _Dimensions2.default.get('window').width;
+
+var InputPayment = function (_Component) {
+    babelHelpers.inherits(InputPayment, _Component);
+
+    function InputPayment(props) {
+        babelHelpers.classCallCheck(this, InputPayment);
+
+        var _this = babelHelpers.possibleConstructorReturn(this, (InputPayment.__proto__ || Object.getPrototypeOf(InputPayment)).call(this, props));
+
+        _this.state = {
+            label: _this.props.text
+        };
+        return _this;
+    }
+
+    babelHelpers.createClass(InputPayment, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                _reactNative.View,
+                { style: styles.box },
+                _react2.default.createElement(_reactNative.TextInput, {
+                    autoCapitalize: 'none',
+                    placeholder: this.state.label,
+                    style: { height: 40, borderColor: 'gray', borderWidth: 0 },
+                    onChangeText: function onChangeText(text) {
+                        return _this2.props.updatePrice({ text: text });
+                    }
+                })
+            );
+        }
+    }]);
+    return InputPayment;
+}(_react.Component);
+
+var styles = _reactNative.StyleSheet.create({
+    box: {
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderColor: '#063e77',
+        borderWidth: 1,
+        borderRadius: 10,
+        height: windowHeight / 12,
+        marginTop: 10,
+        marginLeft: windowWidth / 12,
+        marginRight: windowWidth / 12
+    }
+});
+
+exports.default = InputPayment;
+}, 426, null, "Nable/app/components/InputPayment.js");
 __d(/* Nable/app/scenes/Registration.js */function(global, require, module, exports) {
 'use strict';
 
