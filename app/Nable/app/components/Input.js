@@ -26,6 +26,7 @@ class Input extends Component {
         return (
             <View style={styles.box} >
                 <TextInput
+                    autoCapitalize="none"
                     placeholder={this.state.label}
                     style={{height: 40, borderColor: 'gray', borderWidth: 0}}
                     onChangeText={(email) => this.props.updateEmail({email})}
